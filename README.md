@@ -104,3 +104,109 @@ Types:
 - Docs: Documentation changes
 - Test: Add or update tests
 ```
+
+---
+
+
+### Quick Start – Local Development
+
+#### Option 1: Docker (Recommended)
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/ThEditor/swe-clutter.git
+   cd clutter
+   ```
+
+2. **Set Up Environment Variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
+
+3. **Start All Services**
+   ```bash
+   docker-compose up --build
+   ```
+
+4. **Access the Application**
+   - Dashboard: http://localhost:3000
+   - Studio API: http://localhost:8081
+   - Paper API: http://localhost:8080
+   - ClickHouse: http://localhost:8123
+   - PostgreSQL: localhost:5432
+
+#### Option 2: Manual Setup
+
+1. **Start Databases**
+   ```bash
+   # PostgreSQL
+   docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:16-alpine
+   
+   # ClickHouse
+   docker run -d -p 9000:9000 -p 8123:8123 clickhouse/clickhouse-server:25.3.2-alpine
+   
+   # Redis
+   docker run -d -p 6379:6379 redis:7-alpine
+   ```
+
+2. **Set Up Studio (Backend)**
+   ```bash
+   cd studio
+   cp .env.example .env
+   # Configure DATABASE_URL, CLICKHOUSE_URL, JWT_SECRET
+   go run cmd/app.go
+   ```
+
+3. **Set Up Paper (Collection Service)**
+   ```bash
+   cd paper
+   cp .env.example .env
+   # Configure DATABASE_URL, REDIS_URL, POSTGRES_URL
+   go run cmd/app.go
+   ```
+
+4. **Set Up Frame (Frontend)**
+   ```bash
+   cd frame
+   pnpm install
+   pnpm dev
+   ```
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# PostgreSQL
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=your_postgres_password
+
+# ClickHouse
+CLICKHOUSE_USER=default
+CLICKHOUSE_PASSWORD=your_clickhouse_password
+
+# Redis
+REDIS_PASSWORD=your_redis_password
+
+# Studio (Backend)
+JWT_SECRET=your_jwt_secret_key
+
+# SMTP (Email)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_FROM=noreply@clutter.com
+SMTP_USERNAME=your_email@gmail.com
+SMTP_PASSWORD=your_app_password
+```
+
+### Development Tools
+
+- **IDE:** VS Code (recommended)
+  - Extensions: Go, Prettier, ESLint, Tailwind CSS IntelliSense
+- **API Testing:** Postman / Thunder Client
+- **Database Management:** 
+  - DBeaver (PostgreSQL)
+  - ClickHouse Play (Web UI)
+- **Git:** GitHub Desktop / Git CLI
+- **Container Management:** Docker Desktop
