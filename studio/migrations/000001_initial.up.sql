@@ -1,0 +1,20 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE Users (
+  id UUID PRIMARY KEY,
+  username VARCHAR(255) NOT NULL UNIQUE,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  passHash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE Sites (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL,
+  site_url VARCHAR(255) NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  FOREIGN KEY (user_id) REFERENCES Users(id),
+  CONSTRAINT unique_user_site_url UNIQUE (user_id, site_url)
+);
