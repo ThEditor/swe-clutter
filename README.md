@@ -44,3 +44,63 @@
 ---
 
 You can view the project board [here](https://github.com/users/ThEditor/projects/1/views/1).
+
+---
+
+## Branching Strategy
+
+We follow **GitHub Flow** for a simple and effective development workflow:
+
+### Main Branch
+- `main` - Production-ready code
+- Always deployable
+- Protected branch (requires pull request reviews)
+
+### Feature Branches
+- Created from `main` for new features or bug fixes
+- Naming convention: `feature/<feature-name>` or `fix/<bug-name>`
+- Examples:
+  - `feature/add-login`
+  - `feature/dashboard-charts`
+  - `fix/event-validation`
+
+### Workflow
+1. **Create a feature branch** from `main`:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b feature/your-feature-name
+   ```
+
+2. **Make changes and commit regularly**:
+   ```bash
+   git add .
+   git commit -m "Add: descriptive commit message"
+   ```
+
+3. **Push to remote**:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+4. **Create a Pull Request** on GitHub
+   - Add description of changes
+   - Request review from team members
+   - Ensure all checks pass
+
+5. **Merge to main** after approval
+   - Use "Squash and merge" for clean history
+   - Delete feature branch after merging
+
+### Commit Message Convention
+```
+Type: Short description
+
+Types:
+- Add: New feature
+- Fix: Bug fix
+- Update: Modify existing feature
+- Refactor: Code restructuring
+- Docs: Documentation changes
+- Test: Add or update tests
+```
