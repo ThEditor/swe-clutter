@@ -1,101 +1,46 @@
 # Clutter Analytics
 
-A lightweight web analytics solution with three main components: a tracking script, collection backend, and analytics dashboard.
+> A privacy-first, lightweight web analytics platform designed to provide essential website insights without tracking personal data or compromising site performance.
 
-## Architecture
+---
 
-```
-├── frame/      # Frontend dashboard (Next.js)
-├── ink/        # Tracking script (JavaScript)
-├── paper/      # Collection backend (Go)
-└── studio/     # Dashboard backend (Go)
-```
+## Vision Document
 
-You can view the system design [here](https://www.figma.com/board/iSkI8Wf4Bg2ObJvqozN4EJ/Clutter?node-id=0-1&t=cEBS1bcxrVjqWn0B-1).
+### Project Name & Overview
+**Project Name:** Clutter Analytics
 
-### Components
+**Overview:** Clutter Analytics is a privacy-first, lightweight web analytics platform designed to provide essential website insights without tracking personal data or compromising site performance. It consists of a high-performance collection backend, a clean dashboard, and a minimal tracking script.
 
-#### Frame (Frontend Dashboard)
-- Next.js web application that visualizes analytics data
-- Features:
-  - Site management dashboard
-  - Simple analytics data visualization with charts and metrics
-- Checkout the github repository [here](https://github.com/ThEditor/clutter-frame)
+### Problem it Solves
+- **Complexity:** Major analytics tools (like Google Analytics 4) are overly complex for small to medium websites.
+- **Privacy:** Many tools aggregate user data across sites, raising privacy concerns.
+- **Performance:** Heavy tracking scripts slow down page loads.
+- **Data Ownership:** Users often don't truly own their simplified analytics data.
 
-#### Ink (Tracking Script) 
-- Lightweight JavaScript snippet that website owners add to their sites
-- Collects basic analytics data:
-  - Page views
-  - User agent info
-  - Referrer data
-- Makes HTTP requests to Paper backend to store events
-- Checkout the github repository [here](https://github.com/ThEditor/clutter-ink)
-- Configuration via `window.clutterConfig`:
-```js
-window.clutterConfig = {
-  siteId: "your-site-id"
-}
-```
+### Target Users (Personas)
+- **Developer Dave:** Wants to add analytics to his personal blog or portfolio with a single line of code. Cares about page speed.
+- **Startup Sarah:** Founder of a small SaaS who needs to know conversion sources and top pages but doesn't have a data team.
+- **Privacy Paul:** A website visitor who blocks aggressive trackers but is okay with anonymous page view counting.
 
-#### Paper (Collection Backend)
-- Go service that accepts analytics events from Ink
-- Features:
-  - CORS support for cross-origin requests
-  - Request validation
-  - ClickHouse database for event storage
-- API Endpoints:
-  - `POST /api/event` - Records analytics events
-- Checkout the github repository [here](https://github.com/ThEditor/clutter-paper)
+### Vision Statement
+> "To empower website owners with simple, transparent, and fast analytics that respect user privacy."
 
-#### Studio (Dashboard Backend)
-- Go service that powers the Frame frontend
-- Features:
-  - User authentication with JWT
-  - Site management (CRUD operations)
-  - Analytics data access from ClickHouse
-- Key APIs:
-  - `/auth` - User registration/login
-  - `/sites` - Site management 
-  - `/sites/{id}/analytics` - Analytics data retrieval
-- Checkout the github repository [here](https://github.com/ThEditor/clutter-studio)
+### Key Features / Goals
+- **Featherweight Tracking:** < 2KB script size.
+- **Real-time Dashboard:** Instant feedback on site traffic.
+- **Privacy Compliance:** No cookies, no IP logging, GDPR compliant by design.
+- **Traffic Insights:** Top pages, referrers, device types, and geographic breakdowns.
+- **Self-Hostable:** Open architecture allowing users to host their own instance.
 
-### Data Storage
+### Success Metrics
+- **Performance:** Tracking script load time < 50ms.
+- **Scale:** Handle 1000+ requests/second on a standard node.
+- **Usability:** User can set up a new site and verify tracking within 2 minutes.
 
-- PostgreSQL - User and site data (Studio)
-- ClickHouse - Analytics events data (Paper)
-- Redis - Stores data that needs to be quickly communicated between Studio and Paper.
+### Assumptions & Constraints
+- **Assumptions:** Users have access to modify their website's HTML to add the script. Browser limits (ad blockers) may affect data accuracy.
+- **Constraints:** Limited historical data retention in the MVP.
 
-### Development
+---
 
-Requirements:
-- Go 1.24+
-- Node.js
-- PostgreSQL
-- ClickHouse
-- Redis
-
-Environment variables:
-```sh
-# Studio
-DATABASE_URL=postgres://user:pass@localhost:5432/db
-CLICKHOUSE_URL=clickhouse://default:@localhost:9000/clutter
-PORT=8081
-JWT_SECRET=secret
-
-# Paper
-DATABASE_URL=clickhouse://default:@localhost:9000/clutter
-REDIS_URL=redis://user:pass@localhost:6379
-POSTGRES_URL=postgres://user:pass@localhost:5432/db
-PORT=8080
-```
-
-### Project Status
-
-This is a basic analytics implementation with core features like:
-- Site tracking via JavaScript snippet
-- Event collection API
-- User authentication
-- Site management
-- Basic analytics viewing
-
-This project is still under progress.
+You can view the project board [here](https://github.com/users/ThEditor/projects/1/views/1).

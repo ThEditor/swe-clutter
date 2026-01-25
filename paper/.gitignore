@@ -1,12 +1,11 @@
-# Generated SQLC code
-internal/repository/**/*
+# Paper .gitignore
 
 # Binaries
 *.exe
 *.dll
 *.so
 *.dylib
-clutter-studio
+clutter-paper
 
 # Go test cache
 *.test
@@ -23,3 +22,6 @@ coverage.txt
 
 # OS
 .DS_Store
+
+# Logs
+*.log
