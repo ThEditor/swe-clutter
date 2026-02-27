@@ -2,6 +2,14 @@
 
 > A privacy-first, lightweight web analytics platform designed to provide essential website insights without tracking personal data or compromising site performance.
 
+## Software Design
+
+Clutter Analytics is built as four independent services (Frame, Studio, Paper, Ink) to keep event collection fully decoupled from authentication and analytics queries. The hot path (Ink → Paper → ClickHouse) is optimised for write throughput via Redis-cached site validation, while the cold path (Frame → Studio) handles user management and aggregated reads.
+
+### Design Resources
+
+Editable diagrams and PNG exports are in [`docs/design/`](docs/design/).
+
 ---
 
 ## Vision Document

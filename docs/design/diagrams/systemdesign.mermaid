@@ -1,0 +1,25 @@
+flowchart LR
+    %% Left Side - Event Collection
+    subgraph Event_Collection
+        VB[Visitor Browser]
+        PS[Paper Service]
+        CH[(ClickHouse DB)]
+
+        VB -->|Analytics Data| PS
+        PS --> CH
+    end
+
+    %% Right Side - Dashboard
+    subgraph Dashboard
+        UB[User Browser]
+        FN[Frame - Next.js]
+        SS[Studio Service]
+        PG[(Postgres DB)]
+
+        UB -->|View Dashboard| FN
+        FN --> SS
+        SS --> PG
+    end
+
+    %% Cross Service Query
+    SS --> CH

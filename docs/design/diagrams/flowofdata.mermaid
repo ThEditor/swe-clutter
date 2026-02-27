@@ -1,0 +1,51 @@
+sequenceDiagram
+    actor Owner
+    actor Visitor
+    participant Studio
+    participant Paper
+    participant PG as PostgreSQL
+    participant CH as ClickHouse
+    participant Redis
+
+    %% 1. Auth - Deep Blue
+    rect rgb(25, 42, 86)
+        Note over Owner,PG: 1.0 User Auth & Management
+        Owner->>Studio: username, email, password
+        Studio->>PG: write user record
+        Studio-->>Owner: JWT token
+    end
+
+    %% 2. Site Management - Teal
+    rect rgb(20, 90, 90)
+        Note over Owner,Redis: 2.0 Site Management
+        Owner->>Studio: site_url + JWT
+        Studio->>PG: write site record
+        Studio->>Redis: cache site_id
+        Studio-->>Owner: site_id + snippet
+    end
+
+    %% 3. Event Collection - Burnt Orange
+    rect rgb(120, 60, 20)
+        Note over Visitor,CH: 3.0 Event Collection
+        Visitor->>Paper: page, referrer, user_agent, site_id
+        Paper->>Redis: validate site_id
+        alt cache miss
+            Redis-->>Paper: miss
+            Paper->>PG: fallback lookup
+            PG-->>Paper: site record
+            Paper->>Redis: cache site_id
+        else cache hit
+            Redis-->>Paper: valid
+        end
+        Paper->>CH: insert event
+    end
+
+    %% 4. Analytics - Royal Purple
+    rect rgb(70, 35, 120)
+        Note over Owner,CH: 4.0 Analytics Aggregation
+        Owner->>Studio: site_id + date range + JWT
+        Studio->>PG: verify ownership
+        Studio->>CH: aggregate query
+        CH-->>Studio: top pages, referrers, device stats, visitor graph
+        Studio-->>Owner: analytics response
+    end
