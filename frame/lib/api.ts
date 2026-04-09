@@ -32,6 +32,8 @@ export async function fetchApi<T>(endpoint: string, options: RequestInit = {}): 
   } catch (error) {
     if (error instanceof Error) {
       throw error;
+    } else if (error && typeof error === "object" && "message" in error) {
+      throw error;
     } else {
       throw new Error("An unknown error occurred");
     }

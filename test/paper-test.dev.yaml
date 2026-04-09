@@ -1,5 +1,5 @@
 config:
-  target: "http://localhost:6789"
+  target: "http://localhost:6787"
   phases:
     - duration: 30
       arrivalRate: 80
@@ -21,7 +21,7 @@ scenarios:
               url: "/api/event"
               json:
                 visitor_user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
-                site_id: "97812340-7536-4713-a862-aa23cf3e5744"
+                site_id: "c6777f83-3ed9-46d1-bfda-6f49c0da0d24"
                 referrer: "https://www.google.com/"
                 page: "/home"
         count: 100

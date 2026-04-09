@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "testRunner": "command",
+  "reporters": ["clear-text", "progress", "html"],
+  "coverageAnalysis": "off",
+  "mutate": ["components/dashboard/site-stats.tsx"],
+  "tempDirName": "stryker-tmp",
+  "thresholds": {
+    "high": 80,
+    "low": 60,
+    "break": 0
+  },
+  "commandRunner": {
+    "command": "pnpm exec vitest run tests/components/site-stats.test.tsx"
+  }
+}
